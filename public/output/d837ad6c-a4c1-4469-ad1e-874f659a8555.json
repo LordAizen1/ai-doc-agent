@@ -1,0 +1,116 @@
+{
+  "job_id": "d837ad6c-a4c1-4469-ad1e-874f659a8555",
+  "document_source": "flags.pdf",
+  "ai_analysis": {
+    "sensitive_info": {
+      "emails": [
+        "sarah.chen@alphaventures.com",
+        "john.doe@company.net",
+        "compliance@alphaventures.com",
+        "admin@company.org"
+      ],
+      "phones": [
+        "+1 (555) 123-4567",
+        "555-987-6543",
+        "(555) 234-5678",
+        "+1-555-444-3333"
+      ],
+      "addresses": [],
+      "other_pii": [
+        "Sarah Chen"
+      ]
+    },
+    "security_concerns": {
+      "confidential_markers": [
+        "CONFIDENTIAL",
+        "Internal Use Only",
+        "Private",
+        "PRIVATE document"
+      ],
+      "privacy_issues": [
+        "Client database personal information",
+        "Employee compensation data"
+      ],
+      "proprietary_info": [
+        "Q4 financial projections",
+        "Revenue projections"
+      ]
+    },
+    "context": {
+      "document_type": "Internal Compliance Review",
+      "intended_audience": "Internal stakeholders",
+      "risk_level": 8
+    },
+    "recommendation": {
+      "requires_human_approval": true,
+      "reasoning": "Contains sensitive financial and personal information",
+      "suggested_action": "Restrict access, verify NDA compliance",
+      "external_service": "compliance_review_service"
+    },
+    "total_red_flags": 6,
+    "summary": "Highly confidential internal document with multiple sensitive data points requiring strict access control and verification"
+  },
+  "requires_human_approval": true,
+  "vm_counters": {
+    "total_steps": 9,
+    "elapsed_time": "0:00:08",
+    "actions": {
+      "text_extracted_pdf": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:48.390Z"
+        ]
+      },
+      "ai_agent_analysis_started": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:48.392Z"
+        ]
+      },
+      "llm_api_called": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:48.393Z"
+        ]
+      },
+      "ai_response_parsed": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:57.088Z"
+        ]
+      },
+      "ai_agent_analysis_completed": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:57.088Z"
+        ]
+      },
+      "ai_decided_compliance_review_service": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:57.089Z"
+        ]
+      },
+      "external_api_compliance_review_service_called": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:57.089Z"
+        ]
+      },
+      "external_api_error": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:57.091Z"
+        ]
+      },
+      "human_approval_requested": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T15:18:57.091Z"
+        ]
+      }
+    }
+  },
+  "status": "Awaiting human approval",
+  "elapsed_time": "0:00:08"
+}

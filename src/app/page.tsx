@@ -1,65 +1,214 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Upload, FileText, Loader2, Link as LinkIcon } from 'lucide-react';
 
 export default function Home() {
+  const [file, setFile] = useState<File | null>(null);
+  const [url, setUrl] = useState('');
+  const [activeTab, setActiveTab] = useState('file');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+      setError('');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (activeTab === 'file' && !file) {
+      setError('Please select a file');
+      return;
+    }
+    
+    if (activeTab === 'url' && !url) {
+      setError('Please enter a URL');
+      return;
+    }
+
+    setIsProcessing(true);
+    setError('');
+
+    try {
+      const formData = new FormData();
+      
+      if (activeTab === 'file' && file) {
+        formData.append('file', file);
+      } else if (activeTab === 'url') {
+        formData.append('url', url);
+      }
+
+      const response = await fetch('/api/process', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) throw new Error('Processing failed');
+
+      const result = await response.json();
+      router.push(`/result/${result.job_id}`);
+
+    } catch (err) {
+      setError('Failed to process document. Please try again.');
+      setIsProcessing(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-8">
+      <div className="max-w-2xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
+            🤖 AI Document Review Agent
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-slate-600 dark:text-slate-400">
+            Powered by Claude 3.5 Haiku
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        {/* Upload Card */}
+        <Card className="shadow-lg">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="w-5 h-5" />
+              Upload Document or URL
+            </CardTitle>
+            <CardDescription>
+              Upload a PDF document or paste a URL for AI-powered security analysis
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Tabs value={activeTab} onValueChange={setActiveTab}>
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="file">
+                    <Upload className="w-4 h-4 mr-2" />
+                    PDF File
+                  </TabsTrigger>
+                  <TabsTrigger value="url">
+                    <LinkIcon className="w-4 h-4 mr-2" />
+                    URL
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="file" className="mt-4">
+                  <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-lg p-8 text-center hover:border-blue-500 transition-colors">
+                    <Upload className="w-12 h-12 mx-auto mb-4 text-slate-400" />
+                    <Input
+                      type="file"
+                      accept=".pdf"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="file-upload"
+                      disabled={isProcessing}
+                    />
+                    <label htmlFor="file-upload" className="cursor-pointer">
+                      {file ? (
+                        <div className="space-y-2">
+                          <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                            {file.name}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            Click to change file
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-2">
+                          <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                            Click to upload or drag and drop
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            PDF files only
+                          </p>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="url" className="mt-4">
+                  <div className="space-y-2">
+                    <Input
+                      type="url"
+                      placeholder="https://example.com/document.html"
+                      value={url}
+                      onChange={(e) => {
+                        setUrl(e.target.value);
+                        setError('');
+                      }}
+                      disabled={isProcessing}
+                      className="text-sm"
+                    />
+                    <p className="text-xs text-slate-500">
+                      Enter the URL of a webpage to analyze
+                    </p>
+                  </div>
+                </TabsContent>
+              </Tabs>
+
+              {error && (
+                <Alert variant="destructive">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
+
+              <Button
+                type="submit"
+                className="w-full"
+                size="lg"
+                disabled={isProcessing || (activeTab === 'file' ? !file : !url)}
+              >
+                {isProcessing ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Processing with AI...
+                  </>
+                ) : (
+                  <>
+                    {activeTab === 'file' ? (
+                      <Upload className="mr-2 h-4 w-4" />
+                    ) : (
+                      <LinkIcon className="mr-2 h-4 w-4" />
+                    )}
+                    Analyze {activeTab === 'file' ? 'Document' : 'URL'}
+                  </>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        {/* Info */}
+        <Card className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
+          <CardContent className="pt-6">
+            <div className="flex gap-3">
+              <div className="text-blue-600 dark:text-blue-400">ℹ️</div>
+              <div className="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                <p className="font-medium">How it works:</p>
+                <ol className="list-decimal list-inside space-y-1 text-xs">
+                  <li>AI extracts and analyzes document content</li>
+                  <li>Identifies sensitive information and security risks</li>
+                  <li>Provides risk score (0-10) with reasoning</li>
+                  <li>Routes to appropriate external service</li>
+                  <li>Requests human approval if high-risk detected</li>
+                </ol>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

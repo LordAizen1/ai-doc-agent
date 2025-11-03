@@ -1,0 +1,97 @@
+{
+  "job_id": "173d1a6e-c740-41b2-9c19-1e0ea176215c",
+  "document_source": "no_flags.pdf",
+  "ai_analysis": {
+    "sensitive_info": {
+      "emails": [],
+      "phones": [],
+      "addresses": [],
+      "other_pii": []
+    },
+    "security_concerns": {
+      "confidential_markers": [],
+      "privacy_issues": [],
+      "proprietary_info": [
+        "Project Alpha Development Initiative details",
+        "Development team performance metrics",
+        "Budget status"
+      ]
+    },
+    "context": {
+      "document_type": "Project Status Report",
+      "intended_audience": "Internal Management",
+      "risk_level": 2
+    },
+    "recommendation": {
+      "requires_human_approval": false,
+      "reasoning": "Standard internal project status document with no sensitive personal information",
+      "suggested_action": "Standard filing and distribution",
+      "external_service": "logging_service"
+    },
+    "total_red_flags": 0,
+    "summary": "Internal project status report for Alpha Development Initiative showing on-track progress, with no significant risks or sensitive information detected."
+  },
+  "requires_human_approval": false,
+  "vm_counters": {
+    "total_steps": 9,
+    "elapsed_time": "0:00:05",
+    "actions": {
+      "text_extracted_pdf": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:35.125Z"
+        ]
+      },
+      "ai_agent_analysis_started": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:35.127Z"
+        ]
+      },
+      "llm_api_called": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:35.128Z"
+        ]
+      },
+      "ai_response_parsed": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:39.923Z"
+        ]
+      },
+      "ai_agent_analysis_completed": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:39.923Z"
+        ]
+      },
+      "ai_decided_logging_service": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:39.924Z"
+        ]
+      },
+      "external_api_logging_service_called": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:39.924Z"
+        ]
+      },
+      "external_api_success": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:40.443Z"
+        ]
+      },
+      "auto_approved_by_ai": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T14:58:40.443Z"
+        ]
+      }
+    }
+  },
+  "status": "Completed - Auto-approved",
+  "elapsed_time": "0:00:05"
+}
