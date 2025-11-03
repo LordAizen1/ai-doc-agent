@@ -35,3 +35,17 @@ This project is a Next.js application that allows users to upload a PDF document
 
 4.  **Open the application:**
     Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Screenshots
+
+### Starting Page
+![Starting Page](public/images/first-page.png)
+
+### Flagged PDF Document Analysis (Human Approval)
+![Flagged PDF Document Result](public/images/flagged-pdf.png)
+
+### Human Approval Flow
+![Human Approval Flow](public/images/human-approval.png)
+
+### URL-based Document Analysis (No Flag)
+![URL-based Document Result](public/images/url-based-not-flagged.png)

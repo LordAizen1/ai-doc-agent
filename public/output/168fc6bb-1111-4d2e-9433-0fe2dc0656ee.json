@@ -1,0 +1,106 @@
+{
+  "job_id": "168fc6bb-1111-4d2e-9433-0fe2dc0656ee",
+  "document_source": "https://www.w3.org/Consortium/contact",
+  "source_type": "url",
+  "ai_analysis": {
+    "sensitive_info": {
+      "emails": [
+        "membership@w3.org",
+        "invoicing@w3.org",
+        "w3t-pr@w3.org",
+        "team-liaisons@w3.org",
+        "site-comments@w3.org",
+        "sysreq@w3.org",
+        "contact@w3.org"
+      ],
+      "phones": [
+        "+1.339.273.2711"
+      ],
+      "addresses": [
+        "World Wide Web Consortium, Inc. 401 Edgewater Place, Suite 600 Wakefield, MA 01880 USA"
+      ],
+      "other_pii": []
+    },
+    "security_concerns": {
+      "confidential_markers": [],
+      "privacy_issues": [],
+      "proprietary_info": []
+    },
+    "context": {
+      "document_type": "Public Contact Page",
+      "intended_audience": "General Public, W3C Members, Press, Technology Professionals",
+      "risk_level": 2
+    },
+    "recommendation": {
+      "requires_human_approval": false,
+      "reasoning": "Standard public contact information with no sensitive personal data",
+      "suggested_action": "No action required",
+      "external_service": "logging_service"
+    },
+    "total_red_flags": 0,
+    "summary": "Public contact page with organizational contact details, no significant privacy or security risks detected"
+  },
+  "requires_human_approval": false,
+  "vm_counters": {
+    "total_steps": 9,
+    "elapsed_time": "0:00:08",
+    "actions": {
+      "text_extracted_url": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:37.405Z"
+        ]
+      },
+      "ai_agent_analysis_started": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:37.406Z"
+        ]
+      },
+      "llm_api_called": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:37.407Z"
+        ]
+      },
+      "ai_response_parsed": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:44.877Z"
+        ]
+      },
+      "ai_agent_analysis_completed": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:44.877Z"
+        ]
+      },
+      "ai_decided_logging_service": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:44.878Z"
+        ]
+      },
+      "external_api_logging_service_called": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:44.878Z"
+        ]
+      },
+      "external_api_success": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:45.449Z"
+        ]
+      },
+      "auto_approved_by_ai": {
+        "count": 1,
+        "timestamps": [
+          "2025-11-03T19:05:45.449Z"
+        ]
+      }
+    }
+  },
+  "status": "Completed - Auto-approved",
+  "elapsed_time": "0:00:08"
+}
